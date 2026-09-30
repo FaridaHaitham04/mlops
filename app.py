@@ -1,27 +1,14 @@
-import streamlit as st
-import pandas as pd
-from dotenv import load_dotenv
-import os
+import csv
 
-# Load environment variables
-load_dotenv()
+def read_csv_as_rows(file_path):
+    with open(file_path, mode='r', encoding='utf-8') as file:
+        reader = csv.reader(file)
+        
+        headers = next(reader)
+        print(f"Headers: {headers}\n")
+        
+        for row in reader:
+            print(row)
 
-name = os.getenv("NAME")
-student_id = os.getenv("ID")
 
-st.title("CSV Reader")
-
-st.write(f"Name: {name}")
-st.write(f"ID: {student_id}")
-
-uploaded_file = st.file_uploader(
-    "Upload a CSV file",
-    type=["csv"]
-)
-
-if uploaded_file is not None:
-    df = pd.read_csv(uploaded_file)
-
-    st.subheader("First 3 Rows")
-
-    st.dataframe(df.head(3))
+read_csv_as_rows('sample-simple.csv')
